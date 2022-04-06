@@ -1,2 +1,2 @@
 # k8s-node-labeler
-Kubernetes operator for setting node labels
+Simple application for updating node labels
