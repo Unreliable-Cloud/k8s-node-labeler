@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 from time import sleep
 from kubernetes import client, config
 import json
