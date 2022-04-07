@@ -1,0 +1,19 @@
+namespace: kube-system
+
+helm:
+  releaseName: node-labeler
+
+targetCustomizations:
+- name: k8s-us-central1
+  helm:
+    values:
+      resource:
+        limits:
+          cpu: 50m
+          memory: 80Mi
+        requests:
+          cpu: 20m
+          memory: 50Mi
+  clusterSelector:
+    matchLabels:
+      clusterName: k8s-us-central1
