@@ -7,13 +7,13 @@ metadata:
    {{- include "node-labeler.labels" . | nindent 4 }}
 data:
   worker-labels.conf: |
-     worker = {
-       "metadata": {
-         "labels": {
-           "node-role.kubernetes.io/worker": ""
-         }
-       }
-     }
+    {
+      "metadata": {
+        "labels": {
+          "node-role.kubernetes.io/worker": ""
+        }
+      }
+    }
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -23,10 +23,10 @@ metadata:
    {{- include "node-labeler.labels" . | nindent 4 }}
 data:
   spot-labels.conf: |
-     spot = {
-       "metadata": {
-         "labels": {
-           "node-role.kubernetes.io/spot-worker": ""
-         }
-       }
-     }
+    {
+      "metadata": {
+        "labels": {
+          "node-role.kubernetes.io/spot-worker": ""
+        }
+      }
+    }
