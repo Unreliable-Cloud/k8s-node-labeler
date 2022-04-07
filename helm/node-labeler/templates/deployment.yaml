@@ -33,6 +33,17 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+           - name: labels-conf
+             mountPath: "/usr/src/app/labels.conf"
+             subPath: labels.conf
+      volumes:
+       - name: labels-conf
+         configMap:
+          name: labels-conf
+          items:
+           - key: labels.conf
+             path: labels.conf
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
