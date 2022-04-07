@@ -26,7 +26,7 @@ def main():
 
   while True:
 
-    spot_node_list = api_instance.list_node(label_selector="spot_instance=true")
+    spot_node_list = api_instance.list_node(label_selector="cloud.google.com/gke-spot=true")
     for node in spot_node_list.items:
         api_response = api_instance.patch_node(node.metadata.name, spot)
         print("%s\t%s" % (node.metadata.name, node.metadata.labels))
