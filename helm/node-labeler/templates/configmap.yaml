@@ -2,11 +2,11 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
- name: labels-conf
+ name: worker-labels-conf
  labels:
    {{- include "node-labeler.labels" . | nindent 4 }}
 data:
-  labels.conf: |
+  worker-labels.conf: |
      worker = {
        "metadata": {
          "labels": {
@@ -14,7 +14,15 @@ data:
          }
        }
      }
-
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+ name: spot-labels-conf
+ labels:
+   {{- include "node-labeler.labels" . | nindent 4 }}
+data:
+  spot-labels.conf: |
      spot = {
        "metadata": {
          "labels": {

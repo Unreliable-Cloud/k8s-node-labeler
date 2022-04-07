@@ -8,24 +8,8 @@ def main():
   config.load_incluster_config()
   api_instance = client.CoreV1Api()
 
-  labelConfig = open("labels.conf", "r")
-  print(labelConfig.read())
-
-  worker = {
-    "metadata": {
-      "labels": {
-        "node-role.kubernetes.io/worker": ""
-      }
-    }
-  }
-
-  spot = {
-    "metadata": {
-      "labels": {
-        "node-role.kubernetes.io/spot-worker": ""
-      }
-    }
-  }
+  worker = open("worker-labels.conf", "r")
+  spot = open("spot-labels.conf", "r")
 
   while True:
 

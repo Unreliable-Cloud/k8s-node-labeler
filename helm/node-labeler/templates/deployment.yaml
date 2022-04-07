@@ -34,16 +34,25 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
-           - name: labels-conf
-             mountPath: "/usr/src/app/labels.conf"
-             subPath: labels.conf
+           - name: worker-labels-conf
+             mountPath: "/usr/src/app/worker-labels.conf"
+             subPath: worker-labels.conf
+           - name: spot-labels-conf
+             mountPath: "/usr/src/app/spot-labels.conf"
+             subPath: spot-labels.conf
       volumes:
-       - name: labels-conf
+       - name: worker-labels-conf
          configMap:
-          name: labels-conf
+          name: worker-labels-conf
           items:
-           - key: labels.conf
-             path: labels.conf
+           - key: worker-labels.conf
+             path: worker-labels.conf
+       - name: spot-labels-conf
+         configMap:
+          name: spot-labels-conf
+          items:
+           - key: spot-labels.conf
+             path: spot-labels.conf
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
