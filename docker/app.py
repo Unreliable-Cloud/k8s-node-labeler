@@ -8,6 +8,9 @@ def main():
   config.load_incluster_config()
   api_instance = client.CoreV1Api()
 
+  labelConfig = open("labels.conf", "r")
+  print(labelConfig.read())
+
   worker = {
     "metadata": {
       "labels": {
