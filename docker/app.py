@@ -8,8 +8,11 @@ def main():
   config.load_incluster_config()
   api_instance = client.CoreV1Api()
 
-  worker = open("worker-labels.conf", "r")
-  spot = open("spot-labels.conf", "r")
+  workerConf = open("worker-labels.conf", "r")
+  spotConf = open("spot-labels.conf", "r")
+
+  worker = print(workerConf.read())
+  spot = print(spotConf.read())
 
   while True:
 
