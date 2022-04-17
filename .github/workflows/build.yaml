@@ -7,8 +7,9 @@ on:
 
 env:
   GCP_PROJECT: kubernetes-346019
-  REGISTRY: us.gcr.io
-  IMAGE_NAME: private/node-labeler
+  REGISTRY: harbor-core.k8s.undependable.cloud/private
+  IMAGE_NAME: node-labeler
+  USERNAME: admin
   CONTEXT: docker
   CHART_PATH: helm/node-labeler
 
@@ -20,15 +21,17 @@ jobs:
       - name: Get the version and build container
         id: get_tag_name
         run: echo ::set-output name=GIT_TAG_NAME::${GITHUB_REF/refs\/tags\//}
-      - uses: RafikFarhad/push-to-gcr-github-action@v3.0.2
+      - uses: docker/login-action@v1
         with:
-          gcloud_service_key: ${{ secrets.GCLOUD_SERVICE_KEY }}
           registry: ${{ env.REGISTRY }}
-          project_id: ${{ env.GCP_PROJECT }}
-          image_name: ${{ env.IMAGE_NAME }}
-          image_tag: ${{ steps.get_tag_name.outputs.GIT_TAG_NAME }}
-          dockerfile: ./${{ env.CONTEXT }}/Dockerfile
-          context: ./${{ env.CONTEXT }}/
+          username: ${{ env.USERNAME }}
+          password: ${{ secrets.HARBOR_REG_PRIVATE }}
+      - uses: docker/build-push-action@v2
+        with:
+          context: ./${{ env.CONTEXT }}
+          file: ./${{ env.CONTEXT }}/Dockerfile
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.get_tag_name.outputs.GIT_TAG_NAME }}
       - uses: actions/checkout@v2
       - name: Update image tag
         id: set_tag_name
