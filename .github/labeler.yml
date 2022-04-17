@@ -2,7 +2,3 @@ repo:
 - '*'
 helm:
 - helm/**/*
-source:
-- site/public/**/*
-content:
-- site/content/**/*
