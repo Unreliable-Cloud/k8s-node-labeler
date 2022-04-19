@@ -3,6 +3,10 @@ defaultNamespace: kube-system
 helm:
   releaseName: node-labeler
 
+dependsOn:
+- name: sealed-secrets-charts-sealed-secrets-helm
+- name: harbor-helm
+
 targetCustomizations:
 - name: k8s-us-central1
   helm:
@@ -17,3 +21,16 @@ targetCustomizations:
   clusterSelector:
     matchLabels:
       clusterName: k8s-us-central1
+- name: k8s-us-centralus
+  helm:
+    values:
+      resource:
+        limits:
+          cpu: 50m
+          memory: 80Mi
+        requests:
+          cpu: 20m
+          memory: 50Mi
+  clusterSelector:
+    matchLabels:
+      clusterName: k8s-us-centralus
