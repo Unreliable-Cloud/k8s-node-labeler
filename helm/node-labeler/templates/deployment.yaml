@@ -34,7 +34,7 @@ spec:
           env:
             {{- range $key, $value :=  .Values.labelSelectors }}
             - name: {{ $key | upper | replace "-" "_" }}
-              value: {{ $value | quote }}
+              value: {{ $value }}
             {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}

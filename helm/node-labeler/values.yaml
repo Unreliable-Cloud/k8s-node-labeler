@@ -45,9 +45,10 @@ resources:
     cpu: 100m
     memory: 128Mi
 
+labelSelectors:
+  SPOTS: "cloud.google.com/gke-spot=true"
+  WORKERS: 'node-role.kubernetes.io/master!='
+
 nodeSelector: {}
 tolerations: []
 affinity: {}
-labelSelectors:
-  SPOTS: "cloud.google.com/gke-spot=true"
-  WORKERS: "node-role.kubernetes.io/master!="
