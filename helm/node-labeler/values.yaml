@@ -50,4 +50,4 @@ tolerations: []
 affinity: {}
 labelSelectors:
   SPOTS: "cloud.google.com/gke-spot=true"
-  WORKERS: "node-role.kubernetes.io/master!=,node-role.kubernetes.io/control-plane!="
+  WORKERS: "node-role.kubernetes.io/master!="
