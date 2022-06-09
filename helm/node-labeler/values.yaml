@@ -5,13 +5,12 @@
 replicaCount: 1
 
 image:
-  repository: harbor-core.k8s.undependable.cloud/private/node-labeler
+  repository: docker.io/youvegotmoxie/node-labeler
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: v0.1.4
 
-imagePullSecrets:
-- name: harbor-private
+imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
