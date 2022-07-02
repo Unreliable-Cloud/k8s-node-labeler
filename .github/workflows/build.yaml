@@ -41,7 +41,7 @@ jobs:
           tags: ${{ env.REGISTRY_BASE }}/${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:v${{ steps.get_commit_sha_short.outputs.GIT_TAG_NAME }}
           context: ${{ env.CONTEXT }}
       - name: Sign Docker image
-        run: cosign sign --key cosign.key ${{ env.REGISTRY_BASE }}/${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:v${{ steps.get_commit_sha_short.outputs.GIT_TAG_NAME }}
+        run: cosign sign --key cosign.key -a signed=github  ${{ env.REGISTRY_BASE }}/${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:v${{ steps.get_commit_sha_short.outputs.GIT_TAG_NAME }}
         env:
           COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
         if: github.event.pull_request.merged == true
