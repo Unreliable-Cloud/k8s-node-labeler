@@ -50,7 +50,7 @@ jobs:
         if: github.event.pull_request.merged == true
         id: set_tag_name
         run: |
-          sed -i "s|tag:.*|tag :v${{ steps.get_commit_sha_short.outputs.GIT_TAG_NAME }}|g" ./${{ env.CHART_PATH }}/values.yaml
+          sed -i "s|tag:.*|tag: v${{ steps.get_commit_sha_short.outputs.GIT_TAG_NAME }}|g" ./${{ env.CHART_PATH }}/values.yaml
           sed -i "s|version: .*|version: v${{ steps.get_commit_sha_short.outputs.GIT_TAG_NAME }}|g" ./${{ env.CHART_PATH }}/values.yaml
           sed -i "s|appVersion:.*|appVersion: v${{ steps.get_commit_sha_short.outputs.GIT_TAG_NAME }}|g" ./${{ env.CHART_PATH }}/Chart.yaml
       - uses: stefanzweifel/git-auto-commit-action@v4
