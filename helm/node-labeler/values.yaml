@@ -25,6 +25,10 @@ serviceAccount:
 
 podAnnotations: {}
 
+podLabels:
+  app: node-labeler
+
+
 podSecurityContext: {}
   # fsGroup: 2000
 

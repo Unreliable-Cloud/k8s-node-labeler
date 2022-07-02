@@ -35,6 +35,7 @@ Common labels
 */}}
 {{- define "node-labeler.labels" -}}
 helm.sh/chart: {{ include "node-labeler.chart" . }}
+app: {{ include "node-labeler.name" . }}
 {{ include "node-labeler.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}

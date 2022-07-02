@@ -1,51 +1,67 @@
 ---
-name: Build container and push to GCR
+name: Build Container
 on:
-  push:
-    tags:
-    - '*'
+  pull_request:
+    types: [ closed ]
 
 env:
-  GCP_PROJECT: kubernetes-346019
-  REGISTRY: harbor-core.k8s.undependable.cloud/private
+  REGISTRY: youvegotmoxie
   IMAGE_NAME: node-labeler
-  USERNAME: admin
   CONTEXT: docker
   CHART_PATH: helm/node-labeler
+  REGISTRY_BASE: docker.io
 
 jobs:
-  build-and-push-to-gcr:
+  build-and-push:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Get the version and build container
-        id: get_tag_name
-        run: echo ::set-output name=GIT_TAG_NAME::${GITHUB_REF/refs\/tags\//}
-      - uses: docker/login-action@v1
+        id: get_commit_sha_short
+        if: github.event.pull_request.merged == true
+        run: echo "::set-output name=GIT_TAG_NAME::$(git rev-parse --short HEAD)"
+      - uses: docker/login-action@v2
+        if: github.event.pull_request.merged == true
         with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ env.USERNAME }}
-          password: ${{ secrets.HARBOR_REG_PRIVATE }}
-      - uses: docker/build-push-action@v2
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: cosign-installer
+        uses: sigstore/cosign-installer@v2.0.0
+        if: github.event.pull_request.merged == true
+      - name: Output cosign private key
+        if: github.event.pull_request.merged == true
+        run: 'echo "$KEY" > cosign.key'
+        shell: bash
+        env:
+          KEY: ${{ secrets.COSIGN_PRIVATE_KEY }}
+      - uses: docker/build-push-action@v3
+        if: github.event.pull_request.merged == true
         with:
-          context: ./${{ env.CONTEXT }}
-          file: ./${{ env.CONTEXT }}/Dockerfile
           push: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.get_tag_name.outputs.GIT_TAG_NAME }}
+          tags: ${{ env.REGISTRY_BASE }}/${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:v${{ steps.get_commit_sha_short.outputs.GIT_TAG_NAME }}
+          context: ${{ env.CONTEXT }}
+      - name: Sign Docker image
+        run: cosign sign --key cosign.key ${{ env.REGISTRY_BASE }}/${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:v${{ steps.get_commit_sha_short.outputs.GIT_TAG_NAME }}
+        env:
+          COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
+        if: github.event.pull_request.merged == true
       - uses: actions/checkout@v2
       - name: Update image tag
+        if: github.event.pull_request.merged == true
         id: set_tag_name
         run: |
-          sed -i "s|v[0-9].[0-9].[0-9].*|${{ steps.get_tag_name.outputs.GIT_TAG_NAME }}|g" ./${{ env.CHART_PATH }}/values.yaml
-          sed -i "s|v[0-9].[0-9].[0-9]|${{ steps.get_tag_name.outputs.GIT_TAG_NAME }}|g" ./${{ env.CHART_PATH }}/Chart.yaml
+          sed -i "s|tag:.*|tag :v${{ steps.get_commit_sha_short.outputs.GIT_TAG_NAME }}|g" ./${{ env.CHART_PATH }}/values.yaml
+          sed -i "s|version: .*|version: v${{ steps.get_commit_sha_short.outputs.GIT_TAG_NAME }}|g" ./${{ env.CHART_PATH }}/values.yaml
+          sed -i "s|appVersion:.*|appVersion: v${{ steps.get_commit_sha_short.outputs.GIT_TAG_NAME }}|g" ./${{ env.CHART_PATH }}/Chart.yaml
       - uses: stefanzweifel/git-auto-commit-action@v4
+        if: github.event.pull_request.merged == true
         with:
           commit_message: Automated Change
           commit_options: '--no-verify --signoff'
           commit_user_name: GitHub Actions
           commit_author: Author <github-actions@undependable.cloud>
-          create_branch: true
-          branch: 'feature/update-tag'
+          create_branch: false
+          branch: master
       - uses: ravsamhq/notify-slack-action@master
         if: always()
         with:
