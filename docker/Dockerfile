@@ -6,4 +6,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY app.py ./
 RUN chmod +x ./app.py
 
-CMD [ "ddtrace-run", "python", "./app.py" ]
+CMD [ "python", "./app.py" ]
