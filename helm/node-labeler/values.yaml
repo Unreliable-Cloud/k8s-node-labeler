@@ -24,7 +24,8 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: "node-labeler"
 
-podAnnotations: {}
+podAnnotations:
+  ad.datadoghq.com/node-labeler.logs: '[{"source": "json", "service": "node-labeler"}]'
 
 podLabels:
   app: node-labeler
@@ -54,6 +55,9 @@ resources:
 labelSelectors:
   SPOTS: "cloud.google.com/gke-spot=true"
   WORKERS: 'node-role.kubernetes.io/master!='
+
+apm:
+  enabled: true
 
 nodeSelector: {}
 tolerations: []
