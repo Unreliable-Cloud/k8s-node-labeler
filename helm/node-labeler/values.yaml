@@ -57,7 +57,7 @@ labelSelectors:
   WORKERS: 'node-role.kubernetes.io/master!='
 
 apm:
-  enabled: true
+  enabled: false
 
 nodeSelector: {}
 tolerations: []

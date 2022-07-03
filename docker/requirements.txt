@@ -1,2 +1,2 @@
 kubernetes==22.6.0
-ddtrace==1.2.2
+#ddtrace==1.2.2
