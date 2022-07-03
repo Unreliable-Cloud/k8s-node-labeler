@@ -71,29 +71,29 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
-           - name: worker-labels-conf
-             mountPath: "/usr/src/app/worker-labels.conf"
+           - name: worker-labels-yaml
+             mountPath: "/usr/src/app/worker-labels.yaml"
              subPath: worker-labels.conf
-           - name: spot-labels-conf
-             mountPath: "/usr/src/app/spot-labels.conf"
+           - name: spot-labels-yaml
+             mountPath: "/usr/src/app/spot-labels.yaml"
              subPath: spot-labels.conf
            {{- if .Values.apm.enabled }}
            - name: apmsocketpath
              mountPath: /var/run/datadog
            {{- end }}
       volumes:
-       - name: worker-labels-conf
+       - name: worker-labels-yaml
          configMap:
-          name: worker-labels-conf
+          name: worker-labels-yaml
           items:
-           - key: worker-labels.conf
-             path: worker-labels.conf
-       - name: spot-labels-conf
+           - key: worker-labels.yaml
+             path: worker-labels.yaml
+       - name: spot-labels-yaml
          configMap:
-          name: spot-labels-conf
+          name: spot-labels-yaml
           items:
-           - key: spot-labels.conf
-             path: spot-labels.conf
+           - key: spot-labels.yaml
+             path: spot-labels.yaml
        {{- if .Values.apm.enabled }}
        - hostPath:
            path: /var/run/datadog/
