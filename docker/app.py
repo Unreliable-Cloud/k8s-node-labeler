@@ -1,22 +1,23 @@
 from time import sleep
 from kubernetes import client, config
 import json
+import yaml
 import os
 
 def main():
   config.load_incluster_config()
   api_instance = client.CoreV1Api()
 
-  spotConfig   = 'spot-labels.conf'
-  workerConfig = 'worker-labels.conf'
+  spotConfig   = 'spot-labels.yaml'
+  workerConfig = 'worker-labels.yaml'
   spotLabels   = os.environ.get('SPOTS')
   workerLabels = os.environ.get('WORKERS')
 
   with open(spotConfig) as f:
-    spot = json.loads(f.read())
+    spot = yaml.load(f.read(), Loader=yaml.FullLoader)
 
   with open(workerConfig) as f:
-    worker = json.loads(f.read())
+    worker = yaml.load(f.read(), Loader=yaml.FullLoader)
 
   while True:
     try:
