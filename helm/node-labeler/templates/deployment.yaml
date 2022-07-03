@@ -73,10 +73,10 @@ spec:
           volumeMounts:
            - name: worker-labels-yaml
              mountPath: "/usr/src/app/worker-labels.yaml"
-             subPath: worker-labels.conf
+             subPath: worker-labels.yaml
            - name: spot-labels-yaml
              mountPath: "/usr/src/app/spot-labels.yaml"
-             subPath: spot-labels.conf
+             subPath: spot-labels.yaml
            {{- if .Values.apm.enabled }}
            - name: apmsocketpath
              mountPath: /var/run/datadog
