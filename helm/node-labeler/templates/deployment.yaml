@@ -61,10 +61,8 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.labels['tags.datadoghq.com/version']
-            - name: DD_AGENT_HOST
-              valueFrom:
-                fieldRef:
-                  fieldPath: status.hostIP
+            - name: DD_TRACE_AGENT_URL
+              value: 'unix:///var/run/datadog/apm.socket'
             - name: DD_LOGS_INJECTION
               value: "true"
             - name: DD_RUNTIME_METRICS_ENABLED
@@ -79,6 +77,10 @@ spec:
            - name: spot-labels-conf
              mountPath: "/usr/src/app/spot-labels.conf"
              subPath: spot-labels.conf
+           {{- if .Values.apm.enabled }}
+           - name: apmsocketpath
+             mountPath: /var/run/datadog
+           {{- end }}
       volumes:
        - name: worker-labels-conf
          configMap:
