@@ -25,7 +25,7 @@ serviceAccount:
   name: "node-labeler"
 
 podAnnotations:
-  ad.datadoghq.com/node-labeler.logs: '[{"source": "json", "service": "node-labeler"}]'
+  ad.datadoghq.com/node-labeler.logs: '[{"source": "docker", "service": "node-labeler"}]'
 
 podLabels:
   app: node-labeler
