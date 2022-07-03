@@ -86,6 +86,11 @@ spec:
           items:
            - key: spot-labels.conf
              path: spot-labels.conf
+       {{- if .Values.apm.enabled }}
+       - hostPath:
+           path: /var/run/datadog/
+         name: apmsocketpath
+      {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
