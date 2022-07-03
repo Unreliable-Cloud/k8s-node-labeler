@@ -5,7 +5,7 @@ import yaml
 import os
 
 def main():
-  config.load_config()
+  config.load_incluster_config()
   api_instance = client.CoreV1Api()
 
   spotConfig   = 'spot-labels.yaml'
