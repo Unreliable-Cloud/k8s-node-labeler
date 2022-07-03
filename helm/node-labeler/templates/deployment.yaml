@@ -48,6 +48,7 @@ spec:
             - name: {{ $key | upper | replace "-" "_" }}
               value: {{ $value }}
             {{- end }}
+            {{- if .Values.apm.enabled }}
             - name: DD_ENV
               valueFrom:
                 fieldRef:
@@ -60,6 +61,9 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.labels['tags.datadoghq.com/version']
+            - name: DD_LOGS_INJECTION
+              value: "true"
+            {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
