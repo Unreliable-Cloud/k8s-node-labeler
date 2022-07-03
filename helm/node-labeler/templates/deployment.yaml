@@ -63,6 +63,8 @@ spec:
                   fieldPath: metadata.labels['tags.datadoghq.com/version']
             - name: DD_LOGS_INJECTION
               value: "true"
+            - name: DD_RUNTIME_METRICS_ENABLED
+              value: "true"
             {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
