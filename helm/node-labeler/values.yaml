@@ -59,6 +59,9 @@ labelSelectors:
 apm:
   enabled: false
 
-nodeSelector: {}
-tolerations: []
+nodeSelector:
+  master: "true"
+tolerations:
+- key: node-role.kubernetes.io/master
+  effect: NoSchedule
 affinity: {}
