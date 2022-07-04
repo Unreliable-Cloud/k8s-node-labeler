@@ -1,11 +1,12 @@
-from time import sleep
+import json
+import os
 import uuid
 from threading import Thread
-import json
+from time import sleep
+
 import yaml
-import os
 from kubernetes import client, config
-from kubernetes.leaderelection import leaderelection, electionconfig
+from kubernetes.leaderelection import electionconfig, leaderelection
 from kubernetes.leaderelection.resourcelock.configmaplock import ConfigMapLock
 
 if os.path.isdir("/var/run/secrets/kubernetes.io"):
