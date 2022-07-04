@@ -11,7 +11,7 @@ def main():
     config.load_incluster_config()
   else:
     config.load_config()
-  api_instance   = client.CoreV1Api()
+  api_instance   = client.AdmissionregistrationApi()
   leaderelection = Elect(configmap='node-labeler-leader-election')
   le             = Thread(target=leaderelection.run)
   
