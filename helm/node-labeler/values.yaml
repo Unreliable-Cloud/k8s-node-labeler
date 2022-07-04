@@ -8,7 +8,7 @@ image:
   repository: docker.io/youvegotmoxie/node-labeler
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: v9b0b14b
+  tag: v8c0cf05
 
 imagePullSecrets:
 - name: dockerhub-regcred
