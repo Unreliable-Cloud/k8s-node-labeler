@@ -48,6 +48,8 @@ spec:
             - name: {{ $key | upper | replace "-" "_" }}
               value: {{ $value }}
             {{- end }}
+            - name: PYTHONUNBUFFERED
+              value: "1"
             {{- if .Values.apm.enabled }}
             - name: DD_ENV
               valueFrom:
