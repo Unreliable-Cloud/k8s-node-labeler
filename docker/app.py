@@ -1,5 +1,12 @@
 from time import sleep
-from kubernetes import client, config
+from kubernetes import config
+
+if os.path.isdir("/var/run/secrets/kubernetes.io"):
+  config.load_incluster_config()
+else:
+  config.load_config()
+
+from kubernetes import client
 from threading import Thread
 from leaderelection import Elect
 import json
@@ -7,11 +14,7 @@ import yaml
 import os
 
 def main():
-  if os.path.isdir("/var/run/secrets/kubernetes.io"):
-    config.load_incluster_config()
-  else:
-    config.load_config()
-  api_instance   = client.AdmissionregistrationApi()
+  api_instance   = client.CoreV1Api()
   leaderelection = Elect(configmap='node-labeler-leader-election')
   le             = Thread(target=leaderelection.run)
   
