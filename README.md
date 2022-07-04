@@ -1,6 +1,6 @@
 # node-labeler
 
-![Version: 0.0.8](https://img.shields.io/badge/Version-0.0.8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v01acc64](https://img.shields.io/badge/AppVersion-v01acc64-informational?style=flat-square)
+![Version: 0.1.2](https://img.shields.io/badge/Version-0.1.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v5694d60](https://img.shields.io/badge/AppVersion-v5694d60-informational?style=flat-square)
 
 A Helm chart for Kubernetes
 
@@ -13,7 +13,7 @@ A Helm chart for Kubernetes
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"docker.io/youvegotmoxie/node-labeler"` |  |
-| image.tag | string | `"v01acc64"` |  |
+| image.tag | string | `"v5694d60"` |  |
 | imagePullSecrets[0].name | string | `"dockerhub-regcred"` |  |
 | labelSelectors.SPOTS | string | `"cloud.google.com/gke-spot=true"` |  |
 | labelSelectors.WORKERS | string | `"node-role.kubernetes.io/master!="` |  |
