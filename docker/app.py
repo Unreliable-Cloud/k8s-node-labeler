@@ -1,6 +1,6 @@
 from time import sleep
 from kubernetes import config
-
+import os
 if os.path.isdir("/var/run/secrets/kubernetes.io"):
   config.load_incluster_config()
 else:
@@ -11,7 +11,6 @@ from threading import Thread
 from leaderelection import Elect
 import json
 import yaml
-import os
 
 def main():
   api_instance   = client.CoreV1Api()
