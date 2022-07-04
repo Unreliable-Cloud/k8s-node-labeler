@@ -5,13 +5,18 @@ import yaml
 import os
 
 def main():
-  config.load_incluster_config()
+  if os.path.isdir("/var/run/secrets/kubernetes.io"):
+    config.load_incluster_config()
+  else:
+    config.load_config()
   api_instance = client.CoreV1Api()
+
 
   spotConfig   = 'spot-labels.yaml'
   workerConfig = 'worker-labels.yaml'
   spotLabels   = os.environ.get('SPOTS')
   workerLabels = os.environ.get('WORKERS')
+  logObject    = {}
 
   with open(spotConfig) as f:
     spot = yaml.load(f.read(), Loader=yaml.FullLoader)
@@ -23,16 +28,26 @@ def main():
     try:
       spot_node_list = api_instance.list_node(label_selector=spotLabels)
       for node in spot_node_list.items:
-          api_response = api_instance.patch_node(node.metadata.name, body=spot)
-          print("%s\t%s" % (node.metadata.name, node.metadata.labels))
+          api_response               = api_instance.patch_node(node.metadata.name, body=spot)
+          node                       = node.metadata.name
+          logObject['nodeName']      = node
+          logObject['labelSelector'] = spotLabels
+          logObject['message']       = "Set spot-worker label for " + node
+          logOut                     = json.dumps(logObject)
+          print(logOut)
     except api_response.ApiException:
       raise Exception("Unable to patch node")
 
     try:
       worker_node_list = api_instance.list_node(label_selector=workerLabels)
       for node in worker_node_list.items:
-          api_response = api_instance.patch_node(node.metadata.name, body=worker)
-          print("%s\t%s" % (node.metadata.name, node.metadata.labels))
+          api_response               = api_instance.patch_node(node.metadata.name, body=worker)
+          node                       = node.metadata.name
+          logObject['nodeName']      = node
+          logObject['labelSelector'] = workerLabels
+          logObject['message']       = "Set worker label for " + node
+          logOut                     = json.dumps(logObject)
+          print(logOut)
     except api_response.ApiException:
       raise Exception("Unable to patch node")
 
