@@ -2,3 +2,5 @@ repo:
 - '*'
 helm:
 - helm/**/*
+code:
+- docker/*
