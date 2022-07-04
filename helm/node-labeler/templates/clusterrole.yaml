@@ -13,3 +13,13 @@ rules:
   - get
   - list
   - patch
+- apiGroups:
+  - ""
+  resources:
+  - 'configmaps'
+  verbs:
+  - get
+  - list
+  - create
+  - apply
+  - patch
