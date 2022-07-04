@@ -43,13 +43,13 @@ def main():
 
 
 def endLeader():
-    logObject["info"] = "I not am the leader with the lock"
+    logObject["message"] = "I not am the leader with the lock"
     logOut = json.dumps(logObject)
     print(logOut)
 
 
 def startLeader():
-    logObject["info"] = "I am the leader with the lock"
+    logObject["message"] = "I am the leader with the lock"
     logOut = json.dumps(logObject)
 
     with open(spotConfig) as f:
