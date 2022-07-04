@@ -3,4 +3,4 @@ name: node-labeler
 description: A Helm chart for Kubernetes
 type: application
 version: 0.0.10
-appVersion: v2c6cfca
+appVersion: v594439c
