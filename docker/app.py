@@ -29,9 +29,9 @@ logObject = {}
 def main():
     leaseConfig = electionconfig.Config(
         ConfigMapLock(lock_name, lock_namespace, candidate_id),
-        lease_duration=15,
-        renew_deadline=10,
-        retry_period=5,
+        lease_duration=30,
+        renew_deadline=25,
+        retry_period=15,
         onstarted_leading=startLeader,
         onstopped_leading=endLeader,
     )
