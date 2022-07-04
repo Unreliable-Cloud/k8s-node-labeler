@@ -37,6 +37,7 @@ targetCustomizations:
                 operator: In
                 values:
                 - node-labeler
+            topologyKey: kubernetes.io/hostname
   clusterSelector:
     matchLabels:
       clusterName: k8s-us-east
