@@ -24,13 +24,10 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: "node-labeler"
 
-podAnnotations:
-  ad.datadoghq.com/node-labeler.logs: '[{"source": "docker", "service": "node-labeler"}]'
+podAnnotations: {}
 
 podLabels:
   app: node-labeler
-  tags.datadoghq.com/env: prod
-  tags.datadoghq.com/service: "node-labeler"
 
 
 podSecurityContext: {}
