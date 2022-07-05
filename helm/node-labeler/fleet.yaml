@@ -41,7 +41,7 @@ targetCustomizations:
               labelSelector:
                 matchExpressions:
                 - key: app
-                  operator: Exists
+                  operator: In
                   values:
                   - node-labeler
               topologyKey: kubernetes.io/hostname
