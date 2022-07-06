@@ -12,7 +12,7 @@ targetCustomizations:
           cpu: 50m
           memory: 80Mi
         requests:
-          cpu: 20m
+          cpu: 10m
           memory: 50Mi
   clusterSelector:
     matchLabels:
