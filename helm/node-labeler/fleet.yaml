@@ -12,7 +12,7 @@ targetCustomizations:
           cpu: 50m
           memory: 80Mi
         requests:
-          cpu: 10m
+          cpu: 20m
           memory: 50Mi
   clusterSelector:
     matchLabels:
@@ -20,7 +20,7 @@ targetCustomizations:
 - name: k8s-us-east
   helm:
     values:
-      replicaCount: 1
+      replicaCount: 2
       podAnnotations:
         ad.datadoghq.com/node-labeler.logs: '[{"source": "docker", "service": "node-labeler"}]'
       podLabels:
