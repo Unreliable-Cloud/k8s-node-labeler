@@ -20,7 +20,7 @@ targetCustomizations:
 - name: k8s-us-east
   helm:
     values:
-      replicaCount: 2
+      replicaCount: 1
       podAnnotations:
         ad.datadoghq.com/node-labeler.logs: '[{"source": "docker", "service": "node-labeler"}]'
       podLabels:
